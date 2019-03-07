@@ -3,11 +3,10 @@ package codes.simen.IMEI;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.facebook.react.bridge.ReactMethod;
 
 public class RNImeiModule extends ReactContextBaseJavaModule {
 
@@ -23,24 +22,23 @@ public class RNImeiModule extends ReactContextBaseJavaModule {
         return "IMEI";
     }
 
-    @Override
-    public Map<String, Object> getConstants() {
-        final Map<String, Object> constants = new HashMap<>();
-
-        TelephonyManager tm = (TelephonyManager) this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei="";
-        if (android.os.Build.VERSION.SDK_INT >= 26) {
-            imei = tm.getImei().trim();
-        } else {
-            imei= tm.getDeviceId();
+    @ReactMethod
+    public void getImei(Promise promise) {
+        try {
+            TelephonyManager tm = (TelephonyManager) this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
+            String imei;
+            if (android.os.Build.VERSION.SDK_INT >= 26) {
+                imei = tm.getImei().trim();
+            } else {
+                imei = tm.getDeviceId();
+            }
+            promise.resolve(imei);
+        } catch (NullPointerException npe) {
+            promise.reject(npe);
+        } catch (SecurityException se) {
+            promise.reject(se);
         }
 
-        if (imei.isEmpty()) {
-            throw new RuntimeException("Failed to read IMEI (imei is empty!)");
-        }
-        constants.put("imei", imei);
-
-        return constants;
     }
 
 }

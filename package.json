@@ -1,11 +1,11 @@
 {
   "name": "react-native-imei",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Get imei in react-native (Android only)",
   "main": "imei.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SimenCodes/react-native-imei.git"
+    "url": "https://github.com/askell/react-native-imei.git"
   },
   "keywords": [
     "react-component",

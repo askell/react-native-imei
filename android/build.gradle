@@ -1,20 +1,33 @@
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+}
+
 apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 2
         versionName "1.1"
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
     }
     lintOptions {
        warning 'InvalidPackage'
     }
+}
+
+repositories {
+    jcenter()
 }
 
 dependencies {
